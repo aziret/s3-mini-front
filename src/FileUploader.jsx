@@ -33,7 +33,7 @@ const FileUploader = () => {
             onSuccess: () => {
                 setUploading(false);
                 setUploadURL(upload.url); // Set the uploaded file URL
-                alert(`Upload complete! File available at: ${uploadURL}`);
+                alert(`Upload complete! File available at: ${upload.url}`);
             },
             onError: (error) => {
                 setUploading(false);
