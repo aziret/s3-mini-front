@@ -9,11 +9,9 @@ const UploadComponent = () => {
     const fileInputRef = useRef(null);
     const uploadRef = useRef(null);
 
-    // Start the upload process
     const startUpload = (file) => {
-        const endpoint = 'http://localhost:8080/files'; // Replace with your Tus server endpoint
+        const endpoint = 'http://localhost:8080/files';
 
-        // Initialize the Tus upload
         const upload = new Upload(file, {
             endpoint: endpoint,
             metadata: {
@@ -36,14 +34,13 @@ const UploadComponent = () => {
             },
         });
 
-        uploadRef.current = upload;  // Store the upload instance for future reference
+        uploadRef.current = upload;
         upload.start();
         setIsUploading(true);
         setIsPaused(false);
         setFileName(file.name);
     };
 
-    // Pause the upload
     const pauseUpload = () => {
         if (uploadRef.current) {
             uploadRef.current.abort();
@@ -52,7 +49,6 @@ const UploadComponent = () => {
         }
     };
 
-    // Resume the upload
     const resumeUpload = () => {
         if (uploadRef.current && isPaused) {
             uploadRef.current.start();
@@ -61,7 +57,6 @@ const UploadComponent = () => {
         }
     };
 
-    // Handle file selection
     const handleFileChange = (event) => {
         const file = event.target.files[0];
         if (file) {
@@ -73,7 +68,6 @@ const UploadComponent = () => {
         <div className="upload-container">
             <h1>Upload File with Pause and Resume</h1>
 
-            {/* File input */}
             <input
                 type="file"
                 ref={fileInputRef}
@@ -81,13 +75,10 @@ const UploadComponent = () => {
                 disabled={isUploading}
             />
 
-            {/* File name display */}
             {fileName && <p>Uploading: {fileName}</p>}
 
-            {/* Progress bar */}
             <progress value={progress} max="100" style={{ width: '100%' }}></progress>
 
-            {/* Control buttons */}
             <div className="controls">
                 {isUploading && !isPaused && (
                     <button onClick={pauseUpload}>Pause Upload</button>
